@@ -4,3 +4,5 @@ router
 page-js-ie-support
 x-editable-bootstrap
 bootstrap-wysiwyg
+spin
+z-mongo-admin

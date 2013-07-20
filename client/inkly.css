@@ -61,6 +61,8 @@ div.hero-unit{
 body{
 	background-image: url('../img/bg.png');
 	color: rgb(255, 255, 255);
+	margin-bottom: 40px;
+	margin-top: 40px;
 }
 a.closeEdit, a.closeEdit:hover{
 	text-decoration: none;
