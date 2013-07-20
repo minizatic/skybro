@@ -1,0 +1,139 @@
+
+/* CSS declarations go here */
+
+a{
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+#wysihtml5-textarea{
+	width: 85%;
+	height: 100px;
+}
+
+div.post{
+	margin: 50px 50px 50px 10px;
+}
+
+a.addTag{
+	margin-left: 50px;
+}
+.navbar a.brand{
+	margin-left: 2%;
+}
+body{
+	padding-top: 50px;
+}
+form.navbar-search{
+	margin-right: 1%;
+}
+p.navbar-text.heading{
+	margin-left: 10px;
+	color: rgb(255, 50, 50);
+	font-weight: bold;
+}
+p.navbar-text{
+	margin-left: 10px;
+	list-style: none;
+}
+i:hover{
+	color: rgba(100, 100, 100, 0.5);
+}
+.ex{
+	font-weight: bold;
+	font-size: 16pt;
+	margin-top: 100px;
+}
+li span.label{
+	margin-top: 12px;
+	margin-left: 10px;
+}
+
+div.hero-unit{
+	text-align: center;
+	background: rgba(0, 0, 0, 0.3);
+	margin-left: 5%;
+	margin-right: 5%; 
+}
+body{
+	background-image: url('../img/bg.png');
+	color: rgb(255, 255, 255);
+}
+a.closeEdit, a.closeEdit:hover{
+	text-decoration: none;
+	float: right;
+}
+div.dropdown-menu{
+	background: rgba(0, 0, 0, 0.8);
+}
+select#tags{
+	height: 200px;
+}
+div.editPost{
+	background: rgba(50, 0, 0, 0.5);
+}
+span.author{
+	color: rgb(0, 200, 100);
+}
+span.date{
+	color: rgb(200, 0, 0);
+}
+div.comment{
+	background: rgba(50, 50, 50, 0.5);
+	border-radius: 10px;
+	width: 40%;
+	margin-left: 30px;
+}
+blockquote{
+	margin: 10px 10px 10px 10px;
+	margin-left: 40px;
+}
+a.closeComment{
+	float: right;
+}
+div.postComment{
+	width: 20%;
+	background: rgb(10, 10, 10);
+	padding: 10px 10px 10px 10px;
+	border-radius: 10px;
+}
+@media (max-width: 979px) {
+  .navbar-fixed-top,
+  .navbar-fixed-bottom {
+      position: fixed;
+      margin-left: 0px;
+      margin-right: 0px;
+  }
+  p.lead{
+  	word-wrap: break-word;
+  }
+  div.postComment{
+  	width: 95%;
+  }
+  div.comment{
+  	width: 95%;
+  }
+}
+
+ a.brand.madewith{
+ 	float: right;
+ }
+
+ h1.title{
+ 	margin: 20px 20px 20px 20px;
+ }
+
+ .postbuttons, .show-tags{
+ 	margin-left: 30px;
+ }
+ .smallTitle{
+ 	margin-left: 30px;
+ }
+ #search:focus{
+ 	background: rgb(100, 100, 100);
+ 	color: rgb(255, 255, 255);
+ 	text-shadow: none;
+ }

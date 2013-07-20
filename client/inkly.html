@@ -1,0 +1,208 @@
+<head>
+  	<title>inkly</title>
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/js/jquery-1.10.2.min.js"></script>
+	<script src="/js/bootstrap-wysiwyg.js"></script>
+</head>
+
+<body>
+	{{>navbar}}
+	{{renderPage}}
+	{{>footer}}
+</body>
+
+<template name="home">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span7">
+				{{>blogPosts}}
+			</div>
+			<div class="span5">
+				{{>editPost}}
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="about">
+	<div class="hero-unit">
+		<h1>Inkly</h1>
+		<p>Inkly is a real-time, reactive, single-page blogging engine. It supports tags, real-time commenting and searching, tag searching, bookmarks, and post editing.</p>
+		<p>
+		<a class="btn btn-primary btn-large" href="/">
+				Start
+			</a>
+		</p>
+	</div>
+</template>
+
+<template name="navbar">
+	<div class="navbar navbar-fixed-top navbar-inverse">
+	  <div class="navbar-inner">
+
+	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+      <a class="brand" href="#">inkly</a>
+	    	<form class="navbar-search pull-right">
+  				<input id="search" type="text" class="search-query" placeholder="Search">
+			</form>
+
+	  <div class="nav-collapse collapse">
+	    <ul class="nav">
+	      <li {{#if home}}class="active"{{/if}}><a href="/">Home</a></li>
+	      {{#if currentPost}}
+	      <li class="active"><a href="/posts/{{currentPost._id}}">{{currentPost.title}}</a></li>
+	      {{/if}}
+	      {{#if loggedIn}}
+	      <li><a id="newPost">New Post</a></li>
+	      {{/if}}
+	      <li><p class="navbar-text">{{loginButtons}}</p></li>
+	      <li {{#if viewingAbout}}class="active"{{/if}}><a href="/about">About</a></li>
+	    </ul>
+	    </div>
+	  </div>
+	</div>
+</template>
+
+<template name="blogPosts">
+	{{#each posts}}
+	<div class="post">
+		<div class="">
+  			<h1 class="title"><a href="/posts/{{_id}}">{{title}}</a></h1>
+		</div>
+		<blockquote>
+		  <p class='body'>{{body}}</p>
+		  <small>Written by <span class="author">{{author}}</span> on <span class="date">{{pubdate}}<span></small>
+		</blockquote>
+		<div class="show-tags">
+  			Tagged: {{#each tags}} <a class="tagged">{{this}}</a> {{/each}}
+  			<p>{{numComments comments}}</p>
+		</div>
+		{{#if userMatch author}}
+		<div class="btn-group postbuttons" id="{{_id}}">
+			<a class="btn btn-inverse editPost">Edit</a>
+			<a class="btn btn-danger deletePost">Delete</a>
+		</div>
+		{{/if}}
+		{{#if removeable}}
+		<div class="btn-group postbuttons" id="{{_id}}">
+			<a class="btn btn-danger deletePost">Delete</a>
+		</div>
+		{{/if}}
+	</div>
+	{{/each}}
+</template>
+
+<template name="onePost">
+	<div class="">
+		<div class="">
+  			<h1 class="title"><a href="/posts/{{post._id}}">{{post.title}}</a></h1>
+		</div>
+		<blockquote>
+		  <p class='lead body'>{{post.body}}</p>
+		  <small>Written by <span class="author">{{post.author}}</span> on <span class="date">{{post.pubdate}}<span></small>
+		</blockquote>
+		<div class="show-tags">
+  			Tagged: {{#each post.tags}} <a class="tagged">{{this}}</a> {{/each}}
+  			<p>{{numComments post.comments}}</p>
+		</div>
+		{{#if loggedIn}}
+		<div class="btn-group postbuttons" id="{{post._id}}">
+		{{#if userMatch post.author}}
+			<a class="btn btn-inverse editPost">Edit</a>
+			<a class="btn btn-danger deletePost">Delete</a>
+		{{/if}}
+		<a class="btn btn-info comment">Comment</a>
+		</div>
+		{{/if}}
+		{{#if post.removeable}}
+		<div class="well well-small btn-group" id="{{post._id}}">
+			<a class="btn btn-danger deletePost">Delete</a>
+		</div>
+		{{/if}}
+		{{#if postingComment}}
+		<div class="postComment">
+			<a class="icon-remove icon-white closeComment" href="#">&times;</a>
+			<label class="control-label" for="comment">Write Comment</label>
+			<textarea id="comment" placeholder="Enter your comment..." autofocus></textarea>
+			<p><button class="btn btn-primary" id="submitComment">Post</button></p>
+		</div>
+		{{/if}}
+		<h4 class="smallTitle">Comments</h4>
+		<div id="comments">
+    	{{#each post.comments}}
+    	<div class="comment">
+    		<blockquote>
+		  		<p>{{comment}}</p>
+		  		<small>Written by <span class="author">{{author}}</span> on <span class="date">{{pubdate}}<span></small>
+			</blockquote>
+		</div>
+    	{{/each}}
+    	</div>
+	</div>
+</template>
+
+<template name="editPost">
+	{{#if clickedEdit}}
+	<div class="well editPost">
+	<a class="closeEdit icon-remove icon-white" href="#">&times;</a>
+	<form>
+		<div class="control-group">
+		<label class="control-label" for="title">Title</label>
+			<div class="controls">
+				<input type="text" id="title" placeholder="Post title..." value="{{post.title}}">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="wysihtml5-textarea">Post body</label>
+			<div class="controls">
+			<textarea id="wysihtml5-textarea" class="save" placeholder="Enter your text ..." autofocus>{{post.body}}</textarea>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<label class="control-label" for="tags">Select all tags that apply <small>(Hold down control to select multiple)</small></label>
+				<select id="tags" multiple>
+					{{#each tags}}
+					<option value={{tag}} {{#if selected}} selected {{/if}}>{{tag}}</option>
+					{{/each}}
+				</select>
+				<a class="btn btn-success addTag">Add a Tag <i class="icon-plus icon-white"></i></a>
+				{{#if addingTag}}
+				<div class="input-append">
+				<input id="newTag" type="text" placeholder="Name of your tag"></input>
+				<button class="btn btn-info createTag"><i class="icon-plus"></i></button>
+				</div>
+				{{/if}}
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-primary" id="submitPost">Post</button>
+			</div>
+		</div>
+	</form>
+	</div>
+	{{/if}}
+</template>
+
+
+<template name="footer">
+	<div class="navbar navbar-fixed-bottom navbar-inverse">
+	  <div class="navbar-inner">
+        {{#if selectedTags}}
+         <ul class="nav">
+	      <li><p class="navbar-text heading">Find by tags:   </p></li>
+	      {{#each selectedTags}}
+	      <li><span class="label label-info" id="{{this}}">{{this}} <a href="#" class="icon-remove icon-white deSelect"></a></span></li>
+	      {{/each}}
+	      {{/if}}
+	      </ul>
+	      <a class="brand madewith" href="http://meteor.com"><small>Made with Meteor</small></a>
+	  </div>
+	</div>
+</template>
