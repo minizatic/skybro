@@ -11,7 +11,7 @@ Meteor.startup(function () {
             pubdate: new Date(),
             tags: ["automated"],
             removeable: true,
-            comments: [{comment: "hello world", author: "not you", pubdate: new Date()}]
+            comments: [{comment: "Hello world!", author: "robot commenter", pubdate: new Date()}]
           });
         }
       });
