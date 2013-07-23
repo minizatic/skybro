@@ -39,14 +39,6 @@ p.navbar-text{
 	margin-left: 10px;
 	list-style: none;
 }
-i:hover{
-	color: rgba(100, 100, 100, 0.5);
-}
-.ex{
-	font-weight: bold;
-	font-size: 16pt;
-	margin-top: 100px;
-}
 li span.label{
 	margin-top: 12px;
 	margin-left: 10px;
@@ -101,6 +93,7 @@ div.postComment{
 	background: rgb(10, 10, 10);
 	padding: 10px 10px 10px 10px;
 	border-radius: 10px;
+	margin-left: 30px;
 }
 @media (max-width: 979px) {
   .navbar-fixed-top,

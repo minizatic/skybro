@@ -104,7 +104,7 @@ Template.onePost.events({
 	'click a.comment': function(e){
 		Session.set("postingComment", true);
 	},
-	'click a.closeComment': function(e){
+	'click a.exitComment': function(e){
 		Session.set("postingComment", false);
 	},
 	'click button#submitComment': function(e){
