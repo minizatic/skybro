@@ -1,7 +1,9 @@
 <head>
   	<title>inkly</title>
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="/js/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-wysihtml5.css"></link>
+	<script src="/js/wysihtml5-0.3.0.js"></script>
+	<script src="/js/bootstrap-wysihtml5.js"></script>
 </head>
 
 <body>
@@ -13,11 +15,10 @@
 <template name="home">
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span7">
+			<div class="span6">
 				{{>blogPosts}}
 			</div>
-			<div class="span5">
-				{{>editPost}}
+			<div class="span6 editor">
 			</div>
 		</div>
 	</div>
@@ -74,7 +75,7 @@
   			<h1 class="title"><a href="/posts/{{_id}}">{{title}}</a></h1>
 		</div>
 		<blockquote>
-		  <p class='body'>{{body}}</p>
+		  <p class='body'>{{{body}}}</p>
 		  <small>Written by <span class="author">{{author}}</span> on <span class="date">{{pubdate}}<span></small>
 		</blockquote>
 		<div class="show-tags">
@@ -102,7 +103,7 @@
   			<h1 class="title"><a href="/posts/{{post._id}}">{{post.title}}</a></h1>
 		</div>
 		<blockquote>
-		  <p class='lead body'>{{post.body}}</p>
+		  <p class='lead body'>{{{post.body}}}</p>
 		  <small>Written by <span class="author">{{post.author}}</span> on <span class="date">{{post.pubdate}}<span></small>
 		</blockquote>
 		<div class="show-tags">

@@ -19,10 +19,15 @@ tags = new Meteor.Collection("tags");
 
 Accounts.ui.config({passwordSignupFields: 'USERNAME_ONLY'});
 
+Template.editPost.rendered = function(){
+	$('#wysihtml5-textarea').wysihtml5();
+}
+
 Template.navbar.events({
 	'click #newPost': function(e){
 		Meteor.Router.to('/');
 		Session.set("clickedEdit", true);
+		$('div.span6.editor').html(Meteor.render(Template.editPost));
 	},
 	'keyup #search': function(e){
 		Session.set("searchQuery", $(e.target).val());
