@@ -45,10 +45,16 @@ li span.label{
 }
 
 div.hero-unit{
-	text-align: center;
 	background: rgba(0, 0, 0, 0.3);
 	margin-left: 5%;
 	margin-right: 5%; 
+	height: 400px;
+	text-align: center;
+}
+div.feature{
+	background: rgb(0, 0, 0);
+	padding: 10px 10px 10px 10px;
+	border-radius: 10px;
 }
 body{
 	background-image: url('../img/bg.png');
