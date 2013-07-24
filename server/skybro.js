@@ -54,6 +54,12 @@ tags.allow({
 comments.allow({
   insert: function(userId, doc){
     return userId;
+  },
+  remove: function(userId, doc){
+    return doc.author == Meteor.user().username;
+  },
+  update: function(userId, doc, fields){
+    return doc.author == Meteor.user().username &&  ! _.contains(fields, ['author', 'pubdate'])
   }
 })
 

@@ -142,3 +142,7 @@ div.postComment{
  	width: 20%;
  	margin: 20px 20px 20px 20px;
  }
+ a.editComment{
+ 	margin-left: 50%;
+ 	margin-top: 10px;
+ }

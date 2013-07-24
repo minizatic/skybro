@@ -133,7 +133,7 @@
 		<div class="postComment">
 			<a class="icon-remove icon-white closeComment exitComment" href="#">&times;</a>
 			<label class="control-label" for="comment">Write Comment</label>
-			<textarea id="comment" placeholder="Enter your comment..." autofocus></textarea>
+			<textarea id="comment" placeholder="Enter your comment..." autofocus>{{editComment}}</textarea>
 			<p><button class="btn btn-primary" id="submitComment">Post</button></p>
 		</div>
 		<div class="commentError"></div>
@@ -143,8 +143,8 @@
 		<div id="comments">
     	{{#each theComments}}
     	<div class="comment">
-    		<blockquote>
-		  		<p>{{comment}}</p>
+    		<blockquote id="{{_id}}">
+		  		<p>{{comment}}{{#if userMatch author}}<a class="editComment btn btn-info">Edit</a> <a class="icon-remove icon-white closeComment deleteComment" href="#">&times;</a>{{/if}}</p>
 		  		<small>Written by <span class="author">{{author}}</span> on <span class="date">{{pubdate}}<span></small>
 			</blockquote>
 		</div>

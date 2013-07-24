@@ -126,29 +126,51 @@ Template.onePost.theComments = function(){
 	return comments.find({_id: {$in: Template.onePost.post().comments}});
 }
 
+Template.onePost.editComment = function(){
+	return Session.get("editingComment");
+}
+
 Template.onePost.events({
 	'click a.comment': function(e){
 		Session.set("postingComment", true);
 	},
 	'click a.exitComment': function(e){
+		Session.set("comment_id", undefined);
+		Session.set("editingComment", undefined);
 		Session.set("postingComment", false);
 	},
 	'click button#submitComment': function(e){
 		var commentObj = {};
 		commentObj.comment = $('textarea#comment').val();
 		if(commentObj.comment != ""){
-			commentObj.pubdate = new Date();
 			commentObj.author = Meteor.user().username;
-			var id = comments.insert(commentObj);
-			blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: id}});
+			if(!Session.equals("editingComment", undefined)){
+					comments.update({_id: Session.get("comment_id")}, {$set: commentObj});
+			}else{
+				commentObj.pubdate = new Date();
+				var id = comments.insert(commentObj);
+				blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: id}});
+			}
+			Session.set("comment_id", undefined);
+			Session.set("editingComment", undefined);
 			Session.set("postingComment", false);
 		}else{
 			Session.set("reRender", false);
 			$('.commentError').html(Meteor.render(Template.error({Error: "Comment may not be blank"})));
 		}
+	},
+	'click a.deleteComment': function(e){
+		var id = $(e.target).parent().parent().attr("id");
+		blogPosts.update({_id: Session.get("currentPost")}, {$pull: {comments: id}});
+		comments.remove({_id: id});
+	},
+	'click a.editComment': function(e){
+		var id = $(e.target).parent().parent().attr("id");
+		Session.set("comment_id", id);
+		Session.set("editingComment", comments.findOne({_id: id}).comment);
+		Session.set("postingComment", true);
 	}
 });
-
 Template.navbar.loggedIn = function(){
 	if(Meteor.user()){
 		return true;
