@@ -5,7 +5,7 @@ function include(arr, obj) {
 }
 
 Deps.autorun(function () {
-document.title = Session.get("pageTitle") + " | Inkly";
+document.title = Session.get("pageTitle") + " | Skybro";
 });
 
 Session.set("searchQuery", "");

@@ -5,9 +5,9 @@ Meteor.startup(function () {
           console.log(err);
         }else{
           blogPosts.insert({
-            title: "Welcome to inkly",
-            body: "This is a sample blog post set up by the inkly server. Delete this post and start blogging!",
-            author: "The inkly Robot",
+            title: "Welcome to Skybro",
+            body: "This is a sample blog post set up by the Skybro server. Delete this post and start blogging!",
+            author: "The Skybro Robot",
             pubdate: new Date(),
             tags: ["automated"],
             removeable: true,
