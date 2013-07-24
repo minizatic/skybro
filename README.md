@@ -3,7 +3,7 @@ Skybro
 
 ##Installation
 
-###Linux
+###Linux or OSX
 
 Install Meteor:
 
@@ -14,7 +14,7 @@ curl https://install.meteor.com | /bin/sh
 Download and unzip the repo:
 
 ```
-wget https://github.com/mineturtle13/skybro/archive/master.zip
+curl -L -o master.zip https://github.com/mineturtle13/skybro/archive/master.zip
 
 unzip master.zip
 
@@ -33,6 +33,10 @@ Run!:
 ```
 mrt run
 ```
+
+###Windows
+
+Meteor isn't officially supported on Windows, but it's not impossible to get it running.
 
 ##Features
 1. Single-page (Browse the whole blog without ever loading a new page)
