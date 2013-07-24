@@ -17,6 +17,9 @@ blogPosts = new Meteor.Collection("blogPosts");
 Meteor.subscribe("tags");
 tags = new Meteor.Collection("tags");
 
+Meteor.subscribe("comments");
+comments = new Meteor.Collection("comments");
+
 Accounts.ui.config({passwordSignupFields: 'USERNAME_ONLY'});
 
 Template.editPost.rendered = function(){
@@ -119,6 +122,10 @@ Template.footer.events({
 	}
 });
 
+Template.onePost.theComments = function(){
+	return comments.find({_id: {$in: Template.onePost.post().comments}});
+}
+
 Template.onePost.events({
 	'click a.comment': function(e){
 		Session.set("postingComment", true);
@@ -132,7 +139,8 @@ Template.onePost.events({
 		if(commentObj.comment != ""){
 			commentObj.pubdate = new Date();
 			commentObj.author = Meteor.user().username;
-			blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: commentObj}});
+			var id = comments.insert(commentObj);
+			blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: id}});
 			Session.set("postingComment", false);
 		}else{
 			Session.set("reRender", false);
