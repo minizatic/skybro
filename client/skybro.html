@@ -136,6 +136,8 @@
 			<textarea id="comment" placeholder="Enter your comment..." autofocus></textarea>
 			<p><button class="btn btn-primary" id="submitComment">Post</button></p>
 		</div>
+		<div class="commentError"></div>
+		<br></br>
 		{{/if}}
 		<h4 class="smallTitle">Comments</h4>
 		<div id="comments">
@@ -185,6 +187,7 @@
 				{{/if}}
 			</div>
 		</div>
+		<div class="postError"></div>
 		<div class="control-group">
 			<div class="controls">
 				<button type="submit" class="btn btn-primary" id="submitPost">Post</button>
@@ -209,5 +212,12 @@
 	      </ul>
 	      <a class="brand madewith" href="http://meteor.com"><small>Made with Meteor</small></a>
 	  </div>
+	</div>
+</template>
+
+<template name="error">
+	<div class="alert alert-error">
+  		<button type="button" class="close" data-dismiss="alert">&times;</button>
+ 		 <strong>Error:</strong> {{Error}}
 	</div>
 </template>

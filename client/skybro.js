@@ -20,13 +20,16 @@ tags = new Meteor.Collection("tags");
 Accounts.ui.config({passwordSignupFields: 'USERNAME_ONLY'});
 
 Template.editPost.rendered = function(){
-	$('#wysihtml5-textarea').wysihtml5();
+	if(Session.equals("reRender", true)){
+		$('#wysihtml5-textarea').wysihtml5();
+	}
 }
 
 Template.navbar.events({
 	'click #newPost': function(e){
 		Meteor.Router.to('/');
 		Session.set("clickedEdit", true);
+		Session.set("reRender", true);
 		$('div.span6.editor').html(Meteor.render(Template.editPost));
 	},
 	'keyup #search': function(e){
@@ -54,24 +57,34 @@ Template.editPost.events({
 		var post = {};
 		post.title = $('input#title').val();
 		post.body = $('#wysihtml5-textarea').val();
-		post.author = Meteor.user().username;
-		post.tags = [];
-		post.pubdate = new Date();
-		$('select#tags option:selected').each(function(i){
-			post.tags[i] = $(this).val();
-		})
-		if(Session.get("editing_post")){
-			var _id = Session.get("editing_post")._id;
-			blogPosts.update({_id: _id}, {$set: post});
-		}else{
-			post.comments = [];
-			blogPosts.insert(post);
+		if (post.title != ""){
+			if(post.body != ""){
+			post.author = Meteor.user().username;
+			post.tags = [];
+			post.pubdate = new Date();
+			$('select#tags option:selected').each(function(i){
+				post.tags[i] = $(this).val();
+			})
+			if(Session.get("editing_post")){
+				var _id = Session.get("editing_post")._id;
+				blogPosts.update({_id: _id}, {$set: post});
+			}else{
+				post.comments = [];
+				blogPosts.insert(post);
 
-		}
+			}
 			Session.set("clickedEdit", false);
 			Session.set("editing", false);
 			Session.set("editing_post", undefined);
 			Session.set("addingTag", false);
+			}else{
+				Session.set("reRender", false);
+				$('.postError').html(Meteor.render(Template.error({Error: "Post body may not be blank"})));
+			}
+		}else{
+			Session.set("reRender", false);
+			$('.postError').html(Meteor.render(Template.error({Error: "Title may not be blank"})));
+		}
 	}
 });
 
@@ -82,6 +95,7 @@ Template.blogPosts.events({
 		Session.set("editing_post", post);
 		Session.set("editing", true);
 		Session.set("clickedEdit", true);
+		Session.set("reRender", true);
 	},
 	'click .deletePost': function(e){
 		var _id = $(e.target).closest("div").attr("id");
@@ -115,10 +129,15 @@ Template.onePost.events({
 	'click button#submitComment': function(e){
 		var commentObj = {};
 		commentObj.comment = $('textarea#comment').val();
-		commentObj.pubdate = new Date();
-		commentObj.author = Meteor.user().username;
-		blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: commentObj}});
-		Session.set("postingComment", false);
+		if(commentObj.comment != ""){
+			commentObj.pubdate = new Date();
+			commentObj.author = Meteor.user().username;
+			blogPosts.update({_id: Session.get("currentPost")}, {$push: {comments: commentObj}});
+			Session.set("postingComment", false);
+		}else{
+			Session.set("reRender", false);
+			$('.commentError').html(Meteor.render(Template.error({Error: "Comment may not be blank"})));
+		}
 	}
 });
 
