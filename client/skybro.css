@@ -55,11 +55,20 @@ div.feature{
 	border-radius: 10px;
 }
 body{
-	background: rgb(250, 250, 250);
+	background-image: url('../img/ps_neutral.png');
 	color: rgb(0, 0, 0);
 	padding-bottom: 40px;
 	padding-top: 40px;
 }
+
+p.body{
+	font-family: 'Sorts Mill Goudy', serif;
+}
+
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Jura';
+}
+
 a.closeEdit, a.closeEdit:hover{
 	text-decoration: none;
 	float: right;
@@ -125,6 +134,14 @@ div.postComment{
 
  h1.title{
  	margin: 20px 20px 20px 20px;
+ }
+
+ h1.title a{
+ 	color: rgb(10, 10, 10);
+ }
+
+ h1.title a:hover{
+ 	color: rgb(50, 50, 50);
  }
 
  .postbuttons, .show-tags{
