@@ -103,6 +103,7 @@ Template.blogPosts.events({
 		Session.set("editing", true);
 		Session.set("clickedEdit", true);
 		Session.set("reRender", true);
+		$('div.span6.editor').html(Meteor.render(Template.editPost));
 	},
 	'click .deletePost': function(e){
 		var _id = $(e.target).closest("div").attr("id");
@@ -127,7 +128,9 @@ Template.footer.events({
 });
 
 Template.onePost.theComments = function(){
+	if(Template.onePost.post()){
 	return comments.find({_id: {$in: Template.onePost.post().comments}});
+	}
 }
 
 Template.onePost.editComment = function(){
@@ -294,9 +297,16 @@ Meteor.Router.add({
 });
 
 Template.onePost.post = function(){
-	post =  blogPosts.findOne({_id: Session.get("currentPost")});
-	Session.set("pageTitle", post.title);
-	return post;
+	if(!Session.equals("currentPost", undefined)){
+		var post = blogPosts.findOne({_id: Session.get("currentPost")});
+		if(post){
+			Session.set("pageTitle", post.title);
+			return post;
+		}else{
+			return undefined;
+		}
+	}
+	return undefined;
 }
 
 Template.navbar.currentPost = function(){
