@@ -14,7 +14,7 @@ curl https://install.meteor.com | /bin/sh
 Download and unzip the repo:
 
 ```
-curl -L -o master.zip https://github.com/mineturtle13/skybro/archive/master.zip
+curl -L -o master.zip https://github.com/minizatic/skybro/archive/master.zip
 
 unzip master.zip
 
