@@ -45,6 +45,17 @@ Meteor.publish("comments", function(){
   return comments.find({});
 });
 
+Meteor.publish("userData", function () {
+  return Meteor.users.find({_id: this.userId},
+                           {fields: {'admin': 1}});
+});
+
+Meteor.users.allow({
+  update: function(userId, doc, fields){
+    return _.contains(fields, ['admin'])
+  }
+})
+
 tags.allow({
   insert: function(userId, doc){
     return userId;
@@ -76,4 +87,3 @@ blogPosts.allow({
     return doc.author === Meteor.user().username || doc.removeable === true;
   }
 });
-

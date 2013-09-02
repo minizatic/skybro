@@ -4,6 +4,10 @@ function include(arr, obj) {
     }
 }
 
+Meteor.autosubscribe(function () {
+    Meteor.subscribe("userData");
+});
+
 Deps.autorun(function () {
 document.title = Session.get("pageTitle") + " | Skybro";
 });

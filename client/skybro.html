@@ -42,7 +42,7 @@
 </template>
 
 <template name="navbar">
-	<div class="navbar navbar-fixed-top navbar-inverse">
+	<div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
 
 	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -89,13 +89,13 @@
 		</div>
 		{{#if userMatch author}}
 		<div class="btn-group postbuttons" id="{{_id}}">
-			<a class="btn btn-inverse editPost">Edit</a>
-			<a class="btn btn-danger deletePost">Delete</a>
+			<a class="btn btn-small btn-inverse editPost">Edit</a>
+			<a class="btn btn-small btn-danger deletePost">Delete</a>
 		</div>
 		{{/if}}
 		{{#if removeable}}
 		<div class="btn-group postbuttons" id="{{_id}}">
-			<a class="btn btn-danger deletePost">Delete</a>
+			<a class="btn btn-small btn-danger deletePost">Delete</a>
 		</div>
 		{{/if}}
 	</div>
@@ -118,20 +118,20 @@
 		{{#if loggedIn}}
 		<div class="btn-group postbuttons" id="{{post._id}}">
 		{{#if userMatch post.author}}
-			<a class="btn btn-inverse editPost">Edit</a>
-			<a class="btn btn-danger deletePost">Delete</a>
+			<a class="btn btn-small btn-inverse editPost">Edit</a>
+			<a class="btn btn-small btn-danger deletePost">Delete</a>
 		{{/if}}
-		<a class="btn btn-info comment">Comment</a>
+		<a class="btn btn-small btn-info comment">Comment</a>
 		</div>
 		{{/if}}
 		{{#if post.removeable}}
 		<div class="postbuttons btn-group" id="{{post._id}}">
-			<a class="btn btn-danger deletePost">Delete</a>
+			<a class="btn btn-small btn-danger deletePost">Delete</a>
 		</div>
 		{{/if}}
 		{{#if postingComment}}
 		<div class="postComment">
-			<a class="icon-remove icon-white closeComment exitComment" href="#">&times;</a>
+			<a class="icon-remove closeComment exitComment" href="#">&times;</a>
 			<label class="control-label" for="comment">Write Comment</label>
 			<textarea id="comment" placeholder="Enter your comment..." autofocus>{{editComment}}</textarea>
 			<p><button class="btn btn-primary" id="submitComment">Post</button></p>
@@ -144,7 +144,7 @@
     	{{#each theComments}}
     	<div class="comment">
     		<blockquote id="{{_id}}">
-		  		<p>{{comment}}{{#if userMatch author}}<a class="editComment btn btn-info">Edit</a> <a class="icon-remove icon-white closeComment deleteComment" href="#">&times;</a>{{/if}}</p>
+		  		<p>{{comment}}{{#if userMatch author}}<a class="editComment btn btn-small btn-info">Edit</a><a class="icon-remove closeComment deleteComment" href="#">&times;</a>{{/if}}</p>
 		  		<small>Written by <span class="author">{{author}}</span> on <span class="date">{{pubdate}}<span></small>
 			</blockquote>
 		</div>
@@ -156,7 +156,7 @@
 <template name="editPost">
 	{{#if clickedEdit}}
 	<div class="well editPost">
-	<a class="closeEdit icon-remove icon-white" href="#">&times;</a>
+	<a class="closeEdit icon-remove" href="#">&times;</a>
 	<form>
 		<div class="control-group">
 		<label class="control-label" for="title">Title</label>
@@ -200,7 +200,7 @@
 
 
 <template name="footer">
-	<div class="navbar navbar-fixed-bottom navbar-inverse">
+	<div class="navbar navbar-fixed-bottom">
 	  <div class="navbar-inner">
         {{#if selectedTags}}
          <ul class="nav">
@@ -220,4 +220,29 @@
   		<button type="button" class="close" data-dismiss="alert">&times;</button>
  		 <strong>Error:</strong> {{Error}}
 	</div>
+</template>
+
+<template name="admin">
+	<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span6">
+					{{>posts}}
+					{{>tags}}
+					{{>comments}}
+				</div>
+				<div class="span6 editor">
+				</div>
+			</div>
+	</div>
+</template>
+
+<template name="posts">
+	{{#each blogPosts}}
+	<div class="adminPost">
+		<p>Title: {{title}}</p>
+		<p>Body: {{body}}</p>
+		<p>
+		<p>Tags: {{#each tags}} {{this}} - {{/each}}</p>
+	</div>
+	{{/each}}
 </template>
