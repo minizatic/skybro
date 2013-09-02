@@ -155,6 +155,5 @@ div.postComment{
  	margin: 20px 20px 20px 20px;
  }
  a.editComment{
- 	float:right;
- 	margin-top: 10px;
+ 	margin-left: 20px;
  }
