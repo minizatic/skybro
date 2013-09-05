@@ -157,3 +157,6 @@ div.postComment{
  a.editComment{
  	margin-left: 20px;
  }
+ a.morePosts{
+ 	margin-left: 40px;
+ }

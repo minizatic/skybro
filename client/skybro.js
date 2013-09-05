@@ -14,6 +14,7 @@ document.title = Session.get("pageTitle") + " | Skybro";
 
 Session.set("searchQuery", "");
 Session.set("selectedTags", []);
+Session.set("postLimit", 10);
 
 Meteor.subscribe("blogPosts");
 blogPosts = new Meteor.Collection("blogPosts");
@@ -115,6 +116,11 @@ Template.blogPosts.events({
 		tags.push($(e.target).text());
 		}
 		Session.set("selectedTags", tags);
+	},
+	'click a.morePosts': function(e){
+		var limit = Session.get("postLimit");
+		limit = limit + 10;
+		Session.set("postLimit", limit);
 	}
 });
 
@@ -237,7 +243,8 @@ Template.blogPosts.posts = function(){
 	}else{
 		query = {$in: Session.get("selectedTags")};
 	}
-	return blogPosts.find({tags: query, $or:[{title: searchExp}, {body: searchExp}]}, {sort: {pubdate: -1}});
+	posts = blogPosts.find({tags: query, $or:[{title: searchExp}, {body: searchExp}]}, {sort: {pubdate: -1}, limit: Session.get("postLimit")});
+	return posts;
 }
 
 Template.editPost.clickedEdit = function(){
