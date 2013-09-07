@@ -106,10 +106,12 @@
 	{{#if noResults}}
 	<h3>Sorry, we didn't find any posts like that</h3>
 	{{else}}
+	{{#if more}}
 	<div><a class="btn btn-info morePosts">More</a></div>
 	{{/if}}
+	{{/if}}
 	{{else}}
-	<img src="/img/spinner.gif">
+	<img class="loader" src="/img/spinner.gif">
 {{/if}}
 </template>
 

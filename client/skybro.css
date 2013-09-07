@@ -160,3 +160,7 @@ div.postComment{
  a.morePosts{
  	margin-left: 40px;
  }
+ img.loader{
+ 	margin-left: 20%;
+ 	margin-top: 50px;
+ }

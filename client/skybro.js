@@ -39,6 +39,10 @@ Template.editPost.rendered = function(){
 	}
 }
 
+Template.blogPosts.more = function(){
+	return Session.get("morePosts");
+}
+
 Template.navbar.events({
 	'click #newPost': function(e){
 		Meteor.Router.to('/');
@@ -250,10 +254,16 @@ Template.blogPosts.posts = function(){
 		query = {$in: Session.get("selectedTags")};
 	}
 	posts = blogPosts.find({tags: query, $or:[{title: searchExp}, {body: searchExp}]}, {sort: {pubdate: -1}, limit: Session.get("postLimit")});
-	if(posts.fetch().length == 0){
+	gotposts = posts.fetch();
+	if(gotposts.length == 0){
 		Session.set("noResults", true);
 	}else{
 		Session.set("noResults", false);
+	}
+	if(gotposts.length < Session.get("postLimit")){
+		Session.set("morePosts", false);
+	}else{
+		Session.set("morePosts", true);
 	}
 	return posts;
 }
