@@ -208,7 +208,7 @@ Template.footer.selectedTags = function(){
 
 Template.blogPosts.userMatch = function(user){
 	if(Meteor.user()){
-	if(user == Meteor.user().username){
+	if(user == Meteor.user().username || Meteor.user().admin == true){
 		return true;
 	}else{
 		return false;
@@ -234,7 +234,7 @@ Template.onePost.numComments = function(comments){
 
 Template.onePost.userMatch = function(user){
 	if(Meteor.user()){
-	if(user == Meteor.user().username){
+	if(user == Meteor.user().username || Meteor.user().admin == true){
 		return true;
 	}else{
 		return false;

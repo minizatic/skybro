@@ -33,6 +33,12 @@ var blogPosts = new Meteor.Collection("blogPosts");
 var tags = new Meteor.Collection("tags");
 var comments = new Meteor.Collection("comments");
 
+var locked = false;
+
+if(locked == true){
+  Accounts.config({forbidClientAccountCreation : true});
+}
+
 Meteor.publish("blogPosts", function(){
   return blogPosts.find({});
 });
@@ -50,12 +56,6 @@ Meteor.publish("userData", function () {
                            {fields: {'admin': 1}});
 });
 
-Meteor.users.allow({
-  update: function(userId, doc, fields){
-    return _.contains(fields, ['admin'])
-  }
-})
-
 tags.allow({
   insert: function(userId, doc){
     return userId;
@@ -67,10 +67,10 @@ comments.allow({
     return userId;
   },
   remove: function(userId, doc){
-    return doc.author == Meteor.user().username;
+    return doc.author == Meteor.user().username || Meteor.user().admin == true;
   },
   update: function(userId, doc, fields){
-    return doc.author == Meteor.user().username &&  ! _.contains(fields, ['author', 'pubdate'])
+    return doc.author == Meteor.user().username &&  ! _.contains(fields, ['author', 'pubdate']) || Meteor.user().admin == true;
   }
 })
 
@@ -80,10 +80,10 @@ blogPosts.allow({
   },
   update: function (userId, doc, fields, modifier) {
     // can only change your own documents
-    return doc.author === Meteor.user().username && ! _.contains(fields, ['comments']) || ! _.contains(fields, ['title', 'body', 'author', '_id', 'pubdate', 'removeable', 'tags']);
+    return doc.author === Meteor.user().username && ! _.contains(fields, ['comments']) || ! _.contains(fields, ['title', 'body', 'author', '_id', 'pubdate', 'removeable', 'tags']) || Meteor.user().admin == true;
   },
   remove: function (userId, doc) {
     // can only remove your own documents
-    return doc.author === Meteor.user().username || doc.removeable === true;
+    return doc.author === Meteor.user().username || doc.removeable === true || Meteor.user().admin == true;
   }
 });
