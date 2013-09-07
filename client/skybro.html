@@ -76,6 +76,7 @@
 </template>
 
 <template name="blogPosts">
+{{#if ready}}
 	{{#each posts}}
 	<div class="post">
 		<div class="">
@@ -102,7 +103,14 @@
 		{{/if}}
 	</div>
 	{{/each}}
+	{{#if noResults}}
+	<h3>Sorry, we didn't find any posts like that</h3>
+	{{else}}
 	<div><a class="btn btn-info morePosts">More</a></div>
+	{{/if}}
+	{{else}}
+	<img src="/img/spinner.gif">
+{{/if}}
 </template>
 
 <template name="onePost">

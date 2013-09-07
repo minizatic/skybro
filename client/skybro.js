@@ -16,7 +16,9 @@ Session.set("searchQuery", "");
 Session.set("selectedTags", []);
 Session.set("postLimit", 10);
 
-Meteor.subscribe("blogPosts");
+Meteor.subscribe('blogPosts', function onComplete() {
+  Session.set('postsLoaded', true);
+});
 blogPosts = new Meteor.Collection("blogPosts");
 
 Meteor.subscribe("tags");
@@ -26,6 +28,10 @@ Meteor.subscribe("comments");
 comments = new Meteor.Collection("comments");
 
 Accounts.ui.config({passwordSignupFields: 'USERNAME_ONLY'});
+
+Template.blogPosts.ready = function(){
+	return Session.get('postsLoaded');
+}
 
 Template.editPost.rendered = function(){
 	if(Session.equals("reRender", true)){
@@ -244,7 +250,16 @@ Template.blogPosts.posts = function(){
 		query = {$in: Session.get("selectedTags")};
 	}
 	posts = blogPosts.find({tags: query, $or:[{title: searchExp}, {body: searchExp}]}, {sort: {pubdate: -1}, limit: Session.get("postLimit")});
+	if(posts.fetch().length == 0){
+		Session.set("noResults", true);
+	}else{
+		Session.set("noResults", false);
+	}
 	return posts;
+}
+
+Template.blogPosts.noResults = function(){
+	return Session.get("noResults");
 }
 
 Template.editPost.clickedEdit = function(){
@@ -299,8 +314,7 @@ Meteor.Router.add({
   	Session.set("currentPost", undefined);
   	Session.set("pageTitle", "About");
   	return 'about';
-
-  }
+   }
 });
 
 Template.onePost.post = function(){
