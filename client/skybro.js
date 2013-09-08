@@ -67,8 +67,13 @@ Template.editPost.events({
 	},
 	'click .createTag': function(e){
 		e.preventDefault();
+		if($('#newTag').val() == ""){
+			Session.set("reRender", false);
+			$('.postError').html(Meteor.render(Template.error({Error: "Tag may not be blank"})));
+		}else{
 		tags.insert({tag: $('#newTag').val()});
 		Session.set("addingTag", false);
+		}
 	},
 	'click #submitPost': function(e){
 		e.preventDefault();

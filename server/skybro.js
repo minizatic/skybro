@@ -58,7 +58,7 @@ Meteor.publish("userData", function () {
 
 tags.allow({
   insert: function(userId, doc){
-    return userId;
+    return userId && doc.tag != "";
   }
 });
 
