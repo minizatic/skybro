@@ -29,9 +29,9 @@ Meteor.startup(function () {
   }
 });
 
-var blogPosts = new Meteor.Collection("blogPosts");
-var tags = new Meteor.Collection("tags");
-var comments = new Meteor.Collection("comments");
+var blogPosts = new Meteor.SmartCollection("blogPosts");
+var tags = new Meteor.SmartCollection("tags");
+var comments = new Meteor.SmartCollection("comments");
 
 var locked = false;
 

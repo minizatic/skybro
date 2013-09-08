@@ -19,13 +19,13 @@ Session.set("postLimit", 10);
 Meteor.subscribe('blogPosts', function onComplete() {
   Session.set('postsLoaded', true);
 });
-blogPosts = new Meteor.Collection("blogPosts");
+blogPosts = new Meteor.SmartCollection("blogPosts");
 
 Meteor.subscribe("tags");
-tags = new Meteor.Collection("tags");
+tags = new Meteor.SmartCollection("tags");
 
 Meteor.subscribe("comments");
-comments = new Meteor.Collection("comments");
+comments = new Meteor.SmartCollection("comments");
 
 Accounts.ui.config({passwordSignupFields: 'USERNAME_ONLY'});
 

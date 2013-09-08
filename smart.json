@@ -1,6 +1,7 @@
 {
   "packages": {
     "accounts-ui-bootstrap-dropdown": {},
-    "router": {}
+    "router": {},
+    "smart-collections": {}
   }
 }
